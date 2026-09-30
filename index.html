@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Deshipolli — Coming Soon</title>
+  <title>Deshi Polli — Coming Soon</title>
 
   <style>
     * {
@@ -13,127 +13,387 @@
       box-sizing: border-box;
     }
 
+    :root {
+      --maroon: #760d24;
+      --dark-maroon: #4f0818;
+      --cream: #f7f0e7;
+      --light: #fffaf5;
+      --text: #211b1b;
+      --muted: #766c6c;
+      --border: rgba(118, 13, 36, 0.14);
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
+      min-height: 100vh;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--light);
+      color: var(--text);
+    }
+
+    /* =========================
+       MAIN HERO
+    ========================= */
+
+    .hero {
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-family: Arial, Helvetica, sans-serif;
-      background: #f7f7f5;
-      color: #171717;
-      text-align: center;
+      padding: 50px 20px;
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(
+          circle at 10% 20%,
+          rgba(118, 13, 36, 0.08),
+          transparent 30%
+        ),
+        radial-gradient(
+          circle at 90% 80%,
+          rgba(118, 13, 36, 0.07),
+          transparent 30%
+        ),
+        var(--light);
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      right: -220px;
+      top: -220px;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 350px;
+      height: 350px;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      left: -180px;
+      bottom: -180px;
     }
 
     .container {
       width: 100%;
-      max-width: 800px;
-      padding: 30px 20px;
+      max-width: 1050px;
+      margin: auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-content {
+      text-align: center;
+      max-width: 760px;
+      margin: auto;
+    }
+
+    /* =========================
+       LOGO
+    ========================= */
+
+    .logo-wrapper {
+      width: 155px;
+      height: 155px;
+      margin: 0 auto 28px;
+      border-radius: 50%;
+      background: var(--maroon);
+      padding: 12px;
+      box-shadow:
+        0 18px 45px rgba(118, 13, 36, 0.20);
     }
 
     .logo {
-      width: 190px;
-      max-width: 70%;
-      height: auto;
-      display: block;
-      margin: 0 auto 30px;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 50%;
     }
+
+    /* =========================
+       BADGE
+    ========================= */
 
     .badge {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
       padding: 9px 18px;
+      border: 1px solid rgba(118, 13, 36, 0.2);
       border-radius: 50px;
-      background: #171717;
-      color: #ffffff;
-      font-size: 12px;
-      font-weight: 700;
+      background: rgba(118, 13, 36, 0.06);
+      color: var(--maroon);
+      font-size: 11px;
+      font-weight: 800;
       letter-spacing: 2px;
-      margin-bottom: 28px;
+      margin-bottom: 22px;
     }
 
+    .badge-dot {
+      width: 7px;
+      height: 7px;
+      background: var(--maroon);
+      border-radius: 50%;
+    }
+
+    /* =========================
+       HEADING
+    ========================= */
+
     h1 {
-      font-size: clamp(44px, 8vw, 82px);
-      line-height: 0.98;
-      font-weight: 800;
+      font-size: clamp(50px, 8vw, 90px);
+      line-height: 0.95;
       letter-spacing: -4px;
+      font-weight: 800;
       margin-bottom: 25px;
     }
 
     h1 span {
-      color: #e63946;
+      color: var(--maroon);
     }
 
-    p {
-      max-width: 570px;
+    .tagline {
+      max-width: 650px;
       margin: 0 auto;
-      color: #666666;
       font-size: 18px;
-      line-height: 1.7;
+      line-height: 1.8;
+      color: var(--muted);
     }
 
-    .facebook-btn {
+    .tagline strong {
+      color: var(--text);
+    }
+
+    /* =========================
+       CTA
+    ========================= */
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 30px;
+    }
+
+    .btn {
+      min-height: 50px;
+      padding: 0 23px;
+      border-radius: 50px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
-      margin-top: 30px;
-      padding: 13px 22px;
-      border-radius: 50px;
-      background: #1877f2;
-      color: #ffffff;
       text-decoration: none;
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 700;
-      transition: transform 0.2s ease, opacity 0.2s ease;
+      transition: 0.25s ease;
     }
 
-    .facebook-btn:hover {
+    .btn-primary {
+      background: var(--maroon);
+      color: white;
+      box-shadow: 0 10px 25px rgba(118, 13, 36, 0.2);
+    }
+
+    .btn-primary:hover {
+      background: var(--dark-maroon);
       transform: translateY(-2px);
-      opacity: 0.9;
     }
 
-    .facebook-icon {
-      font-size: 20px;
-      font-weight: bold;
+    .btn-secondary {
+      color: var(--maroon);
+      border: 1px solid rgba(118, 13, 36, 0.22);
+      background: white;
     }
 
-    .footer {
-      margin-top: 50px;
+    .btn-secondary:hover {
+      background: #f8eeee;
+      transform: translateY(-2px);
+    }
+
+    /* =========================
+       INFO CARDS
+    ========================= */
+
+    .info-section {
+      padding: 0 20px 70px;
+      background: var(--light);
+    }
+
+    .info-grid {
+      max-width: 1050px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .info-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 25px 22px;
+      text-align: center;
+      transition: 0.25s ease;
+    }
+
+    .info-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 15px 35px rgba(50, 20, 25, 0.07);
+    }
+
+    .icon {
+      width: 45px;
+      height: 45px;
+      margin: 0 auto 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: rgba(118, 13, 36, 0.08);
+      color: var(--maroon);
+      font-size: 19px;
+    }
+
+    .info-card h3 {
+      font-size: 15px;
+      margin-bottom: 8px;
+    }
+
+    .info-card p,
+    .info-card a {
+      color: var(--muted);
       font-size: 13px;
-      color: #999999;
+      line-height: 1.6;
+      text-decoration: none;
     }
 
-    @media (max-width: 600px) {
-      .container {
-        padding: 25px 18px;
+    .info-card a:hover {
+      color: var(--maroon);
+    }
+
+    /* =========================
+       ABOUT
+    ========================= */
+
+    .about {
+      padding: 70px 20px;
+      background: var(--maroon);
+      color: white;
+    }
+
+    .about-inner {
+      max-width: 850px;
+      margin: auto;
+      text-align: center;
+    }
+
+    .about-label {
+      font-size: 11px;
+      letter-spacing: 3px;
+      font-weight: 700;
+      opacity: 0.75;
+      margin-bottom: 18px;
+    }
+
+    .about h2 {
+      font-size: clamp(30px, 5vw, 48px);
+      margin-bottom: 20px;
+      letter-spacing: -1px;
+    }
+
+    .about p {
+      max-width: 700px;
+      margin: auto;
+      line-height: 1.8;
+      font-size: 16px;
+      opacity: 0.88;
+    }
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    footer {
+      background: var(--dark-maroon);
+      color: rgba(255,255,255,0.65);
+      text-align: center;
+      padding: 28px 20px;
+      font-size: 12px;
+    }
+
+    footer strong {
+      color: white;
+    }
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media (max-width: 750px) {
+
+      .hero {
+        min-height: auto;
+        padding: 70px 20px 60px;
       }
 
-      .logo {
-        width: 150px;
-        margin-bottom: 25px;
-      }
-
-      .badge {
-        font-size: 10px;
-        padding: 8px 15px;
-        margin-bottom: 22px;
+      .logo-wrapper {
+        width: 135px;
+        height: 135px;
       }
 
       h1 {
-        font-size: clamp(42px, 13vw, 60px);
-        letter-spacing: -2.5px;
+        font-size: clamp(48px, 15vw, 68px);
+        letter-spacing: -3px;
       }
 
-      p {
+      .tagline {
         font-size: 16px;
-        line-height: 1.6;
       }
 
-      .facebook-btn {
-        margin-top: 25px;
+      .info-grid {
+        grid-template-columns: 1fr;
+        max-width: 500px;
       }
 
-      .footer {
-        margin-top: 40px;
+      .info-section {
+        padding-bottom: 55px;
+      }
+    }
+
+    @media (max-width: 450px) {
+
+      .hero {
+        padding-top: 50px;
+      }
+
+      .logo-wrapper {
+        width: 120px;
+        height: 120px;
+      }
+
+      h1 {
+        font-size: 48px;
+      }
+
+      .buttons {
+        flex-direction: column;
+        width: 100%;
+        max-width: 300px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .btn {
+        width: 100%;
       }
     }
   </style>
@@ -141,45 +401,214 @@
 
 <body>
 
-  <main class="container">
+  <!-- =========================
+       HERO
+  ========================== -->
 
-    <!-- Deshipolli Logo -->
-    <img
-      src="./image/logo.png"
-      alt="Deshipolli Logo"
-      class="logo"
-    />
+  <section class="hero">
 
-    <div class="badge">
-      COMING SOON
+    <div class="container">
+
+      <div class="hero-content">
+
+        <!-- Logo -->
+        <div class="logo-wrapper">
+          <img
+            src="./image/logo.png"
+            alt="Deshi Polli Logo"
+            class="logo"
+          />
+        </div>
+
+        <!-- Coming Soon -->
+        <div class="badge">
+          <span class="badge-dot"></span>
+          COMING SOON
+        </div>
+
+        <!-- Main Heading -->
+        <h1>
+          Deshi Roots.<br>
+          <span>Modern Soul.</span>
+        </h1>
+
+        <!-- Description -->
+        <p class="tagline">
+          <strong>Deshi Polli</strong> is a brand inspired by the soul of
+          Bangladesh, celebrating our heritage, craftsmanship, culture,
+          and timeless traditions.
+          <br><br>
+          Something special is being created.
+          Stay connected and be the first to know when we launch.
+        </p>
+
+        <!-- Buttons -->
+        <div class="buttons">
+
+          <a
+            href="https://www.facebook.com/share/1A4dMoyazv/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn btn-primary"
+          >
+            Follow us on Facebook
+          </a>
+
+          <a
+            href="mailto:deshipolli@gmail.com"
+            class="btn btn-secondary"
+          >
+            Contact Us
+          </a>
+
+        </div>
+
+      </div>
+
     </div>
 
-    <h1>
-      Something Great<br />
-      <span>is Coming.</span>
-    </h1>
+  </section>
+
+
+  <!-- =========================
+       INFORMATION
+  ========================== -->
+
+  <section class="info-section">
+
+    <div class="info-grid">
+
+      <!-- Category -->
+      <div class="info-card">
+
+        <div class="icon">✦</div>
+
+        <h3>Category</h3>
+
+        <p>
+          Clothing Brand
+        </p>
+
+      </div>
+
+
+      <!-- Location -->
+      <div class="info-card">
+
+        <div class="icon">⌖</div>
+
+        <h3>Location</h3>
+
+        <p>
+          Chattogram, Bangladesh
+        </p>
+
+      </div>
+
+
+      <!-- Opening -->
+      <div class="info-card">
+
+        <div class="icon">◷</div>
+
+        <h3>Availability</h3>
+
+        <p>
+          Always Open
+        </p>
+
+      </div>
+
+
+      <!-- Phone -->
+      <div class="info-card">
+
+        <div class="icon">☎</div>
+
+        <h3>Phone</h3>
+
+        <a href="tel:01726904287">
+          01726-904287
+        </a>
+
+      </div>
+
+
+      <!-- Email -->
+      <div class="info-card">
+
+        <div class="icon">✉</div>
+
+        <h3>Email</h3>
+
+        <a href="mailto:deshipolli@gmail.com">
+          deshipolli@gmail.com
+        </a>
+
+      </div>
+
+
+      <!-- Address -->
+      <div class="info-card">
+
+        <div class="icon">⌂</div>
+
+        <h3>Address</h3>
+
+        <p>
+          House No–6, Gate No–9,<br>
+          Road No–2, Lane No–5,<br>
+          K Block, Halishahar,<br>
+          Chattogram, Bangladesh
+        </p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       ABOUT
+  ========================== -->
+
+  <section class="about">
+
+    <div class="about-inner">
+
+      <div class="about-label">
+        DESHI POLLI
+      </div>
+
+      <h2>
+        Rooted in Bangladesh.
+      </h2>
+
+      <p>
+        We believe our heritage is more than history.
+        It is the art, culture, craftsmanship and stories
+        that continue to shape who we are.
+        Deshi Polli is bringing these timeless elements
+        into a new expression.
+      </p>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       FOOTER
+  ========================== -->
+
+  <footer>
 
     <p>
-      We’re working behind the scenes to bring Deshipolli to life.
-      Stay tuned — something exciting is on the way.
+      © 2026 <strong>Deshi Polli</strong>. All rights reserved.
     </p>
 
-    <!-- Facebook Button -->
-    <a
-      href="https://www.facebook.com/share/1A4dMoyazv/"
-      target="_blank"
-      rel="noopener noreferrer"
-      class="facebook-btn"
-    >
-      <span class="facebook-icon">f</span>
-      Follow us on Facebook
-    </a>
-
-    <div class="footer">
-      © 2026 Deshipolli. All rights reserved.
-    </div>
-
-  </main>
+  </footer>
 
 </body>
 </html>
