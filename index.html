@@ -3,7 +3,74 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Deshi Polli — Coming Soon</title>
+<title>Deshi Polli | Bangladeshi Heritage Clothing, Coming Soon</title>
+<meta name="description" content="Deshi Polli is an upcoming clothing brand in Chattogram, Bangladesh, creating modern clothing inspired by Jamdani, Panjabi, Kantha and Bengali heritage.">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://deshipolli.com/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Deshi Polli">
+<meta property="og:title" content="Deshi Polli | Bangladeshi Heritage Clothing, Coming Soon">
+<meta property="og:description" content="Modern clothing inspired by Bengali heritage, craft and culture. Coming soon from Chattogram, Bangladesh.">
+<meta property="og:url" content="https://deshipolli.com/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Deshi Polli | Bangladeshi Heritage Clothing">
+<meta name="twitter:description" content="Modern clothing inspired by Bengali heritage, craft and culture. Coming soon from Chattogram, Bangladesh.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://deshipolli.com/#organization",
+      "name": "Deshi Polli",
+      "url": "https://deshipolli.com/",
+      "logo": "https://deshipolli.com/image/logo.png",
+      "description": "An upcoming clothing brand in Chattogram, Bangladesh, creating modern clothing inspired by Bengali heritage, craftsmanship and culture.",
+      "email": "deshipolli@gmail.com",
+      "telephone": "+8801726904287",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Chattogram",
+        "addressCountry": "BD"
+      },
+      "sameAs": ["https://www.facebook.com/share/1A4dMoyazv/"]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://deshipolli.com/#website",
+      "url": "https://deshipolli.com/",
+      "name": "Deshi Polli",
+      "publisher": {"@id": "https://deshipolli.com/#organization"}
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://deshipolli.com/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is Deshi Polli?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Deshi Polli is an upcoming clothing brand based in Chattogram, Bangladesh, bringing Bengali heritage, craft and culture into modern clothing."}
+        },
+        {
+          "@type": "Question",
+          "name": "Where is Deshi Polli based?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Deshi Polli is based in Chattogram, Bangladesh."}
+        },
+        {
+          "@type": "Question",
+          "name": "What will be in Deshi Polli's first collection?",
+          "acceptedAnswer": {"@type": "Answer", "text": "The upcoming collection includes a Jamdani saree, a Deshi Panjabi, a Kantha shawl and a Gamchha wrap."}
+        },
+        {
+          "@type": "Question",
+          "name": "When will Deshi Polli launch?",
+          "acceptedAnswer": {"@type": "Answer", "text": "An exact launch date has not been announced. Visitors can join the email list on the website for launch updates."}
+        }
+      ]
+    }
+  ]
+}
+</script>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root{--maroon:#7b1730;--maroon-d:#4a0b1b;--gold:#d6a85a;--green:#173f32;--bg:#fbf4e6;--card:rgba(255,255,255,.62);--ink:#2a211c;--muted:#6f655b;--line:rgba(123,23,48,.14);
@@ -75,6 +142,10 @@ h1 em{font-style:normal;background:linear-gradient(90deg,#ffd98a,#fff2c9,#e7a94b
 
 /* SECTIONS */
 section.s{padding:110px 5vw;position:relative}
+.faq-list{max-width:850px;margin:auto}
+.faq-list details{border-bottom:1px solid var(--line);padding:18px 8px}
+.faq-list summary{cursor:pointer;font:700 19px var(--serif);color:var(--ink)}
+.faq-list details p{max-width:720px;margin-top:12px;color:var(--muted);line-height:1.8}
 .head{text-align:center;margin-bottom:56px}
 .head small{color:var(--maroon);letter-spacing:6px;font-size:11px;font-weight:700}
 .head h2{font:700 clamp(36px,5vw,60px)/1.1 var(--serif);margin-top:12px;color:var(--ink)}
@@ -231,7 +302,7 @@ nav.solid .lg{height:46px}.ll{height:110px;animation:fl 1.6s ease-in-out infinit
 <nav id="nav">
   <a href="#top" class="brand" aria-label="Deshi Polli"><img src="./image/logo.png" class="lg" alt="Deshi Polli Logo"></a>
   <div class="links">
-    <a class="l" href="#info">Info</a><a class="l" href="#culture">Culture</a><a class="l" href="#collection">Collection</a><a class="l" href="#values">Values</a><a class="l" href="#about">About</a><a class="l" href="#notify">Notify</a>
+    <a class="l" href="#info">Info</a><a class="l" href="#culture">Culture</a><a class="l" href="#collection">Collection</a><a class="l" href="#values">Values</a><a class="l" href="#about">About</a><a class="l" href="#faq">FAQ</a><a class="l" href="#notify">Notify</a>
     <a class="pill" href="https://www.facebook.com/share/1A4dMoyazv/" target="_blank" rel="noopener noreferrer">Follow Us</a>
   </div>
   <button class="menu" onclick="document.getElementById('info').scrollIntoView()" aria-label="Menu">☰</button>
@@ -283,10 +354,20 @@ nav.solid .lg{height:46px}.ll{height:110px;animation:fl 1.6s ease-in-out infinit
   <div class="grid">
     <div class="card rv l"><div class="ic">✦</div><h3>Category</h3><p>Clothing Brand</p></div>
     <div class="card rv"><div class="ic">⌖</div><h3>Location</h3><p>Chattogram, Bangladesh</p></div>
-    <div class="card rv"><div class="ic">◷</div><h3>Availability</h3><p>Always Open</p></div>
+    <div class="card rv"><div class="ic">◷</div><h3>Availability</h3><p>Coming Soon</p></div>
     <div class="card rv"><div class="ic">☎</div><h3>Phone</h3><a href="tel:01726904287">01726-904287</a></div>
     <div class="card rv"><div class="ic">✉</div><h3>Email</h3><a href="mailto:deshipolli@gmail.com">deshipolli@gmail.com</a></div>
     <div class="card rv"><div class="ic">⌂</div><h3>Address</h3><p>House No–6, Gate No–9,<br>Road No–2, Lane No–5,<br>K Block, Halishahar,<br>Chattogram, Bangladesh</p></div>
+  </div>
+</section>
+
+<section class="s" id="faq">
+  <div class="head rv"><small>GOOD TO KNOW</small><h2>Frequently Asked Questions</h2><p>Quick answers about Deshi Polli, the upcoming collection and launch.</p></div>
+  <div class="faq-list rv">
+    <details><summary>What is Deshi Polli?</summary><p>Deshi Polli is an upcoming clothing brand based in Chattogram, Bangladesh, bringing Bengali heritage, craft and culture into modern clothing.</p></details>
+    <details><summary>Where is Deshi Polli based?</summary><p>Deshi Polli is based in Chattogram, Bangladesh.</p></details>
+    <details><summary>What will be in Deshi Polli's first collection?</summary><p>The upcoming collection includes a Jamdani saree, a Deshi Panjabi, a Kantha shawl and a Gamchha wrap.</p></details>
+    <details><summary>When will Deshi Polli launch?</summary><p>An exact launch date has not been announced. Join the email list to receive launch updates.</p></details>
   </div>
 </section>
 
