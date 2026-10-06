@@ -1,2089 +1,2433 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Deshi Polli — Coming Soon</title>
+<title>Deshi Polli — Coming Soon</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-  <link
-    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap"
-    rel="stylesheet"
-  >
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <style>
+<style>
 
-    /* =====================================================
-       ROOT
-    ===================================================== */
+/* =========================================================
+   ROOT
+========================================================= */
 
-    :root {
-      --maroon: #78152b;
-      --dark-maroon: #430917;
-      --green: #173f32;
-      --deep-green: #0b2820;
+:root{
+  --maroon:#7b1730;
+  --maroon-dark:#480b1b;
+  --green:#173f32;
+  --green-dark:#0b2921;
+  --gold:#c6a05a;
 
-      --cream: #f5eddf;
-      --paper: #fbf7ef;
-      --gold: #c7a05b;
+  --cream:#f7f0e3;
+  --paper:#fffaf1;
 
-      --text: #211c19;
-      --muted: #756d64;
+  --text:#241e1a;
+  --muted:#756d64;
 
-      --serif: "Cormorant Garamond", Georgia, serif;
-      --sans: "DM Sans", Arial, sans-serif;
+  --serif:"Cormorant Garamond",Georgia,serif;
+  --sans:"DM Sans",Arial,sans-serif;
 
-      --mouse-x: 50%;
-      --mouse-y: 50%;
-    }
+  --mx:50%;
+  --my:50%;
+}
 
 
-    /* =====================================================
-       RESET
-    ===================================================== */
+/* =========================================================
+   RESET
+========================================================= */
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
 
-    html {
-      scroll-behavior: smooth;
-    }
+html{
+  scroll-behavior:smooth;
+}
 
-    body {
-      min-height: 100vh;
-      overflow-x: hidden;
+body{
+  font-family:var(--sans);
+  color:var(--text);
+  background:var(--cream);
+  overflow-x:hidden;
+}
 
-      font-family: var(--sans);
-      color: var(--text);
+a{
+  text-decoration:none;
+  color:inherit;
+}
 
-      background: var(--cream);
-    }
 
-    a {
-      color: inherit;
-    }
+/* =========================================================
+   LOADING SCREEN
+========================================================= */
 
+.loader{
+  position:fixed;
+  inset:0;
+  z-index:99999;
 
-    /* =====================================================
-       MOUSE LIGHT
-    ===================================================== */
+  display:flex;
+  align-items:center;
+  justify-content:center;
 
-    .mouse-light {
-      position: fixed;
+  background:var(--green-dark);
 
-      width: 420px;
-      height: 420px;
+  transition:
+    opacity 1s ease,
+    visibility 1s ease;
+}
 
-      left: 0;
-      top: 0;
+.loader.hide{
+  opacity:0;
+  visibility:hidden;
+}
 
-      pointer-events: none;
-      z-index: 9999;
+.loader-inner{
+  text-align:center;
+  color:white;
+}
 
-      border-radius: 50%;
+.loader-logo{
+  width:100px;
+  height:100px;
 
-      background:
-        radial-gradient(
-          circle,
-          rgba(196, 154, 82, .12) 0%,
-          rgba(196, 154, 82, .045) 25%,
-          transparent 68%
-        );
+  border-radius:50%;
 
-      transform:
-        translate(
-          calc(var(--mouse-x) - 210px),
-          calc(var(--mouse-y) - 210px)
-        );
+  object-fit:contain;
 
-      transition: transform .12s linear;
-    }
+  margin-bottom:25px;
 
+  animation:
+    loaderFloat 2s ease-in-out infinite;
+}
 
-    /* =====================================================
-       CUSTOM CURSOR
-    ===================================================== */
+.loader-line{
+  width:100px;
+  height:2px;
 
-    .cursor-dot {
-      position: fixed;
+  margin:auto;
 
-      width: 7px;
-      height: 7px;
+  overflow:hidden;
 
-      border-radius: 50%;
+  background:rgba(255,255,255,.15);
+}
 
-      background: var(--maroon);
+.loader-line span{
+  display:block;
 
-      pointer-events: none;
+  width:40%;
 
-      z-index: 10000;
+  height:100%;
 
-      transform:
-        translate(-50%, -50%);
+  background:var(--gold);
 
-      box-shadow:
-        0 0 15px rgba(120,21,43,.5);
-    }
+  animation:
+    loading 1.5s infinite;
+}
 
-    .cursor-ring {
-      position: fixed;
+@keyframes loading{
+  0%{transform:translateX(-120%);}
+  100%{transform:translateX(350%);}
+}
 
-      width: 38px;
-      height: 38px;
+@keyframes loaderFloat{
+  50%{
+    transform:translateY(-8px);
+  }
+}
 
-      border-radius: 50%;
 
-      border: 1px solid rgba(120,21,43,.45);
+/* =========================================================
+   CUSTOM CURSOR
+========================================================= */
 
-      pointer-events: none;
+.cursor-dot{
+  position:fixed;
 
-      z-index: 9999;
+  width:7px;
+  height:7px;
 
-      transform:
-        translate(-50%, -50%);
+  border-radius:50%;
 
-      transition:
-        width .25s ease,
-        height .25s ease,
-        border-color .25s ease,
-        background .25s ease;
-    }
+  background:var(--maroon);
 
-    body.cursor-hover .cursor-ring {
-      width: 58px;
-      height: 58px;
+  pointer-events:none;
 
-      border-color: rgba(120,21,43,.7);
+  z-index:99998;
 
-      background:
-        rgba(120,21,43,.05);
-    }
+  transform:translate(-50%,-50%);
+}
 
+.cursor-ring{
+  position:fixed;
 
-    /* =====================================================
-       HERO
-    ===================================================== */
+  width:42px;
+  height:42px;
 
-    .hero {
-      position: relative;
+  border:1px solid rgba(123,23,48,.4);
 
-      min-height: 100vh;
+  border-radius:50%;
 
-      display: flex;
-      align-items: center;
-      justify-content: center;
+  pointer-events:none;
 
-      padding: 70px 20px;
+  z-index:99997;
 
-      overflow: hidden;
+  transform:translate(-50%,-50%);
 
-      background:
-        radial-gradient(
-          circle at var(--mouse-x) var(--mouse-y),
-          rgba(196,154,82,.12),
-          transparent 28%
-        ),
-        radial-gradient(
-          circle at 10% 20%,
-          rgba(120,21,43,.10),
-          transparent 30%
-        ),
-        linear-gradient(
-          135deg,
-          #fcf8ef,
-          #eee1cb
-        );
-    }
+  transition:
+    width .3s ease,
+    height .3s ease,
+    background .3s ease;
+}
 
+body.cursor-active .cursor-ring{
+  width:65px;
+  height:65px;
 
-    /* =====================================================
-       BACKGROUND ORBS
-    ===================================================== */
+  background:rgba(123,23,48,.05);
+}
 
-    .orb {
-      position: absolute;
 
-      border-radius: 50%;
+/* =========================================================
+   MOUSE LIGHT
+========================================================= */
 
-      pointer-events: none;
+.mouse-light{
+  position:fixed;
 
-      transform-style: preserve-3d;
-    }
+  width:450px;
+  height:450px;
 
-    .orb-1 {
-      width: 550px;
-      height: 550px;
+  left:0;
+  top:0;
 
-      right: -250px;
-      top: -250px;
+  z-index:1;
 
-      border:
-        1px solid rgba(120,21,43,.16);
+  pointer-events:none;
 
-      box-shadow:
-        inset 0 0 100px rgba(255,255,255,.5);
+  border-radius:50%;
 
-      transition: transform 1s cubic-bezier(.2,.8,.2,1);
-    }
+  background:
+    radial-gradient(
+      circle,
+      rgba(198,160,90,.14),
+      transparent 68%
+    );
 
-    .orb-2 {
-      width: 380px;
-      height: 380px;
+  transform:
+    translate(
+      calc(var(--mx) - 225px),
+      calc(var(--my) - 225px)
+    );
 
-      left: -200px;
-      bottom: -180px;
+  transition:transform .12s linear;
+}
 
-      border:
-        1px solid rgba(23,63,50,.18);
 
-      box-shadow:
-        inset 0 0 80px rgba(255,255,255,.5);
+/* =========================================================
+   HERO
+========================================================= */
 
-      transition: transform 1s cubic-bezier(.2,.8,.2,1);
-    }
+.hero{
+  position:relative;
 
+  min-height:100vh;
 
-    /* =====================================================
-       PARTICLES
-    ===================================================== */
+  display:flex;
+  align-items:center;
+  justify-content:center;
 
-    .particles {
-      position: absolute;
-      inset: 0;
+  padding:80px 20px;
 
-      pointer-events: none;
-    }
+  overflow:hidden;
 
-    .particle {
-      position: absolute;
+  background:
 
-      width: 4px;
-      height: 4px;
+    radial-gradient(
+      circle at var(--mx) var(--my),
+      rgba(255,255,255,.55),
+      transparent 25%
+    ),
 
-      border-radius: 50%;
+    radial-gradient(
+      circle at 10% 20%,
+      rgba(123,23,48,.11),
+      transparent 28%
+    ),
 
-      background: var(--gold);
+    radial-gradient(
+      circle at 90% 80%,
+      rgba(23,63,50,.12),
+      transparent 30%
+    ),
 
-      opacity: .35;
+    linear-gradient(
+      135deg,
+      #fffaf1,
+      #eadfc9
+    );
+}
 
-      animation:
-        particleFloat
-        var(--duration)
-        ease-in-out
-        infinite alternate;
-    }
 
-    @keyframes particleFloat {
+/* =========================================================
+   SUN
+========================================================= */
 
-      from {
-        transform:
-          translate3d(0, 0, 0)
-          scale(.8);
-      }
+.sun{
+  position:absolute;
 
-      to {
-        transform:
-          translate3d(
-            var(--move-x),
-            var(--move-y),
-            0
-          )
-          scale(1.4);
-      }
+  width:280px;
+  height:280px;
 
-    }
+  right:7%;
+  top:8%;
 
+  border-radius:50%;
 
-    /* =====================================================
-       DECORATIVE LEAVES
-    ===================================================== */
+  background:
+    radial-gradient(
+      circle,
+      rgba(255,220,137,.65),
+      rgba(255,204,105,.16) 45%,
+      transparent 70%
+    );
 
-    .leaf {
-      position: absolute;
+  filter:blur(3px);
 
-      width: 90px;
-      height: 45px;
+  animation:
+    sunPulse 7s ease-in-out infinite;
+}
 
-      border-radius:
-        100% 0 100% 0;
+@keyframes sunPulse{
 
-      background:
-        linear-gradient(
-          135deg,
-          rgba(23,63,50,.9),
-          rgba(23,63,50,.2)
-        );
+  0%,100%{
+    transform:scale(1);
+    opacity:.65;
+  }
 
-      filter:
-        drop-shadow(
-          15px 20px 12px rgba(0,0,0,.10)
-        );
+  50%{
+    transform:scale(1.12);
+    opacity:.9;
+  }
 
-      pointer-events: none;
+}
 
-      transition:
-        transform .8s cubic-bezier(.2,.8,.2,1);
-    }
 
-    .leaf::after {
-      content: "";
+/* =========================================================
+   DECORATIVE RINGS
+========================================================= */
 
-      position: absolute;
+.ring{
+  position:absolute;
 
-      left: 50%;
-      top: 0;
+  border-radius:50%;
 
-      width: 2px;
-      height: 52px;
+  border:1px solid rgba(123,23,48,.13);
 
-      background: rgba(255,255,255,.45);
+  pointer-events:none;
+}
 
-      transform: rotate(45deg);
-    }
+.ring-1{
+  width:620px;
+  height:620px;
 
-    .leaf-1 {
-      left: 6%;
-      top: 17%;
+  right:-310px;
+  top:-270px;
 
-      transform:
-        rotate(-35deg);
-    }
+  animation:
+    ringRotate 25s linear infinite;
+}
 
-    .leaf-2 {
-      right: 7%;
-      bottom: 18%;
+.ring-2{
+  width:400px;
+  height:400px;
 
-      transform:
-        rotate(140deg);
-    }
+  left:-210px;
+  bottom:-180px;
 
+  border-color:rgba(23,63,50,.15);
 
-    /* =====================================================
-       CONTAINER
-    ===================================================== */
+  animation:
+    ringRotate 30s linear infinite reverse;
+}
 
-    .container {
-      position: relative;
+@keyframes ringRotate{
+  from{transform:rotate(0);}
+  to{transform:rotate(360deg);}
+}
 
-      z-index: 10;
 
-      width: 100%;
-      max-width: 1120px;
+/* =========================================================
+   FLOATING LEAVES
+========================================================= */
 
-      margin: auto;
-    }
+.leaf{
+  position:absolute;
 
+  width:85px;
+  height:42px;
 
-    /* =====================================================
-       HERO PANEL
-    ===================================================== */
+  border-radius:
+    100% 0 100% 0;
 
-    .hero-panel {
-      position: relative;
+  background:
+    linear-gradient(
+      135deg,
+      #214d3e,
+      #66826c
+    );
 
-      padding:
-        70px 40px
-        65px;
+  opacity:.72;
 
-      text-align: center;
+  filter:
+    drop-shadow(
+      12px 16px 10px rgba(0,0,0,.1)
+    );
 
-      border-radius: 40px;
+  pointer-events:none;
 
-      background:
-        linear-gradient(
-          135deg,
-          rgba(255,255,255,.76),
-          rgba(255,255,255,.34)
-        );
+  z-index:2;
+}
 
-      border:
-        1px solid rgba(255,255,255,.85);
+.leaf::after{
+  content:"";
 
-      box-shadow:
-        0 40px 100px rgba(75,45,20,.15),
-        inset 0 1px 0 rgba(255,255,255,.95);
+  position:absolute;
 
-      backdrop-filter: blur(22px);
-      -webkit-backdrop-filter: blur(22px);
+  left:50%;
+  top:0;
 
-      transform-style: preserve-3d;
+  width:2px;
+  height:50px;
 
-      transition:
-        transform .15s ease-out;
-    }
+  background:rgba(255,255,255,.45);
 
-    .hero-panel::before {
-      content: "";
+  transform:rotate(45deg);
+}
 
-      position: absolute;
-      inset: 1px;
+.leaf-1{
+  left:6%;
+  top:18%;
 
-      border-radius: 39px;
+  animation:
+    leafFloat1 8s ease-in-out infinite;
+}
 
-      pointer-events: none;
+.leaf-2{
+  right:7%;
+  bottom:19%;
 
-      background:
-        linear-gradient(
-          120deg,
-          transparent 35%,
-          rgba(255,255,255,.42),
-          transparent 65%
-        );
+  transform:rotate(145deg);
 
-      opacity: .5;
-    }
+  animation:
+    leafFloat2 9s ease-in-out infinite;
+}
 
+@keyframes leafFloat1{
 
-    /* =====================================================
-       LOGO
-    ===================================================== */
+  0%,100%{
+    transform:
+      rotate(-35deg)
+      translate(0,0);
+  }
 
-    .logo-box {
-      position: relative;
+  50%{
+    transform:
+      rotate(-25deg)
+      translate(25px,-20px);
+  }
 
-      width: 180px;
-      height: 180px;
+}
 
-      margin:
-        0 auto
-        28px;
+@keyframes leafFloat2{
 
-      transform-style: preserve-3d;
+  0%,100%{
+    transform:
+      rotate(145deg)
+      translate(0,0);
+  }
 
-      animation:
-        logoFloat
-        5s
-        ease-in-out
-        infinite;
-    }
+  50%{
+    transform:
+      rotate(155deg)
+      translate(-25px,20px);
+  }
 
-    .logo-shadow {
-      position: absolute;
+}
 
-      width: 160px;
-      height: 160px;
 
-      left: 10px;
-      top: 10px;
+/* =========================================================
+   FIREFLIES
+========================================================= */
 
-      border-radius: 50%;
+.firefly{
+  position:absolute;
 
-      background:
-        linear-gradient(
-          145deg,
-          #8c2039,
-          #4d0b1c
-        );
+  width:5px;
+  height:5px;
 
-      box-shadow:
-        0 30px 55px rgba(76,10,28,.30),
-        inset 0 2px 2px rgba(255,255,255,.18);
+  border-radius:50%;
 
-      transform:
-        translateZ(-20px);
-    }
+  background:#d6b765;
 
-    .logo-ring {
-      position: absolute;
+  box-shadow:
+    0 0 12px #d6b765,
+    0 0 25px rgba(214,183,101,.5);
 
-      inset: 0;
+  opacity:.5;
 
-      border-radius: 50%;
+  animation:
+    fireflyMove
+    var(--time)
+    ease-in-out infinite alternate;
+}
 
-      border:
-        1px solid rgba(120,21,43,.35);
+@keyframes fireflyMove{
 
-      transform:
-        translateZ(10px);
-    }
+  0%{
+    transform:
+      translate(0,0)
+      scale:.5;
 
-    .logo {
-      position: absolute;
+    opacity:.15;
+  }
 
-      width: 145px;
-      height: 145px;
+  50%{
+    opacity:1;
+  }
 
-      left: 17px;
-      top: 17px;
+  100%{
+    transform:
+      translate(
+        var(--x),
+        var(--y)
+      )
+      scale:1.5;
 
-      object-fit: contain;
+    opacity:.2;
+  }
 
-      border-radius: 50%;
+}
 
-      transform:
-        translateZ(35px);
 
-      filter:
-        drop-shadow(
-          0 12px 14px rgba(0,0,0,.18)
-        );
-    }
+/* =========================================================
+   HERO CONTAINER
+========================================================= */
 
-    @keyframes logoFloat {
+.container{
+  width:100%;
+  max-width:1120px;
 
-      0%, 100% {
-        transform:
-          translateY(0)
-          rotateX(0);
-      }
+  position:relative;
 
-      50% {
-        transform:
-          translateY(-10px)
-          rotateX(4deg);
-      }
+  z-index:10;
 
-    }
+  margin:auto;
+}
 
 
-    /* =====================================================
-       BADGE
-    ===================================================== */
+/* =========================================================
+   GLASS PANEL
+========================================================= */
 
-    .badge {
-      display: inline-flex;
+.hero-card{
+  position:relative;
 
-      align-items: center;
+  padding:
+    65px 40px
+    60px;
 
-      gap: 10px;
+  text-align:center;
 
-      padding:
-        10px 19px;
+  border-radius:42px;
 
-      border-radius: 100px;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,255,255,.75),
+      rgba(255,255,255,.30)
+    );
 
-      color: var(--maroon);
+  border:
+    1px solid rgba(255,255,255,.9);
 
-      font-size: 10px;
-      font-weight: 800;
+  box-shadow:
+    0 45px 100px rgba(72,42,20,.14),
+    inset 0 1px 0 rgba(255,255,255,.95);
 
-      letter-spacing: 3px;
+  backdrop-filter:blur(22px);
+  -webkit-backdrop-filter:blur(22px);
 
-      background:
-        rgba(255,255,255,.58);
+  transform-style:preserve-3d;
 
-      border:
-        1px solid rgba(120,21,43,.24);
+  transition:
+    transform .15s ease-out;
+}
 
-      box-shadow:
-        0 10px 25px rgba(80,30,20,.06);
-    }
+.hero-card::after{
+  content:"";
 
-    .badge-dot {
-      width: 7px;
-      height: 7px;
+  position:absolute;
 
-      border-radius: 50%;
+  inset:1px;
 
-      background: var(--maroon);
+  border-radius:41px;
 
-      box-shadow:
-        0 0 0 5px rgba(120,21,43,.09);
+  background:
+    linear-gradient(
+      120deg,
+      transparent 30%,
+      rgba(255,255,255,.45),
+      transparent 70%
+    );
 
-      animation:
-        pulse
-        2s
-        infinite;
-    }
+  pointer-events:none;
 
-    @keyframes pulse {
+  animation:
+    glassShine 7s ease-in-out infinite;
+}
 
-      50% {
-        opacity: .35;
-      }
+@keyframes glassShine{
 
-    }
+  0%,100%{
+    opacity:.15;
+    transform:translateX(-20%);
+  }
 
+  50%{
+    opacity:.6;
+    transform:translateX(20%);
+  }
 
-    /* =====================================================
-       HEADING
-    ===================================================== */
+}
 
-    h1 {
-      margin:
-        28px auto
-        22px;
 
-      font-family: var(--serif);
+/* =========================================================
+   LOGO
+========================================================= */
 
-      font-size:
-        clamp(
-          60px,
-          8vw,
-          108px
-        );
+.logo-wrap{
+  position:relative;
 
-      line-height: .82;
+  width:180px;
+  height:180px;
 
-      letter-spacing: -4px;
+  margin:
+    0 auto
+    27px;
 
-      color: var(--green);
+  transform-style:preserve-3d;
 
-      text-shadow:
-        0 12px 30px rgba(0,0,0,.08);
-    }
+  animation:
+    logoFloat 5s ease-in-out infinite;
+}
 
-    h1 span {
-      color: var(--maroon);
+.logo-back{
+  position:absolute;
 
-      text-shadow:
-        0 12px 30px rgba(120,21,43,.13);
-    }
+  width:160px;
+  height:160px;
 
+  left:10px;
+  top:10px;
 
-    /* =====================================================
-       TAGLINE
-    ===================================================== */
+  border-radius:50%;
 
-    .tagline {
-      max-width: 680px;
+  background:
+    linear-gradient(
+      145deg,
+      #8f2440,
+      #4b0b1b
+    );
 
-      margin: auto;
+  box-shadow:
+    0 35px 60px rgba(72,9,25,.3),
+    inset 0 2px 3px rgba(255,255,255,.2);
 
-      color: var(--muted);
+  transform:translateZ(-20px);
+}
 
-      font-size: 16px;
+.logo-ring{
+  position:absolute;
 
-      line-height: 1.85;
-    }
+  inset:0;
 
-    .tagline strong {
-      color: var(--text);
-    }
+  border-radius:50%;
 
+  border:
+    1px solid rgba(123,23,48,.35);
 
-    /* =====================================================
-       BUTTONS
-    ===================================================== */
+  transform:translateZ(10px);
+}
 
-    .buttons {
-      margin-top: 32px;
+.logo{
+  position:absolute;
 
-      display: flex;
+  width:145px;
+  height:145px;
 
-      justify-content: center;
+  left:17px;
+  top:17px;
 
-      flex-wrap: wrap;
+  object-fit:contain;
 
-      gap: 14px;
-    }
+  border-radius:50%;
 
-    .btn {
-      position: relative;
+  transform:translateZ(35px);
 
-      min-height: 53px;
+  filter:
+    drop-shadow(
+      0 12px 15px rgba(0,0,0,.18)
+    );
+}
 
-      padding:
-        0 26px;
+@keyframes logoFloat{
 
-      display: inline-flex;
+  0%,100%{
+    transform:
+      translateY(0)
+      rotateX(0);
+  }
 
-      align-items: center;
-      justify-content: center;
+  50%{
+    transform:
+      translateY(-10px)
+      rotateX(4deg);
+  }
 
-      gap: 9px;
+}
 
-      border-radius: 100px;
 
-      text-decoration: none;
+/* =========================================================
+   BADGE
+========================================================= */
 
-      font-size: 13px;
-      font-weight: 700;
+.badge{
+  position:relative;
 
-      overflow: hidden;
+  display:inline-flex;
 
-      transition:
-        transform .25s ease,
-        box-shadow .25s ease;
-    }
+  align-items:center;
 
-    .btn::before {
-      content: "";
+  gap:10px;
 
-      position: absolute;
+  padding:
+    10px 19px;
 
-      width: 0;
-      height: 0;
+  border-radius:100px;
 
-      left: var(--btn-x, 50%);
-      top: var(--btn-y, 50%);
+  color:var(--maroon);
 
-      border-radius: 50%;
+  font-size:10px;
+  font-weight:800;
 
-      background:
-        rgba(255,255,255,.18);
+  letter-spacing:3px;
 
-      transform:
-        translate(-50%, -50%);
+  background:
+    rgba(255,255,255,.55);
 
-      transition:
-        width .5s ease,
-        height .5s ease;
-    }
+  border:
+    1px solid rgba(123,23,48,.22);
 
-    .btn:hover::before {
-      width: 350px;
-      height: 350px;
-    }
+  box-shadow:
+    0 10px 25px rgba(70,30,20,.06);
 
-    .btn span,
-    .btn-text {
-      position: relative;
-      z-index: 2;
-    }
+  z-index:3;
+}
 
-    .btn-primary {
-      color: white;
+.badge-dot{
+  width:7px;
+  height:7px;
 
-      background:
-        linear-gradient(
-          145deg,
-          #8d2039,
-          #570b1e
-        );
+  border-radius:50%;
 
-      box-shadow:
-        0 16px 35px rgba(120,21,43,.28),
-        inset 0 1px 1px rgba(255,255,255,.2);
-    }
+  background:var(--maroon);
 
-    .btn-secondary {
-      color: var(--maroon);
+  box-shadow:
+    0 0 0 5px rgba(123,23,48,.1);
 
-      background:
-        rgba(255,255,255,.58);
+  animation:
+    pulse 2s infinite;
+}
 
-      border:
-        1px solid rgba(120,21,43,.25);
+@keyframes pulse{
 
-      box-shadow:
-        0 12px 25px rgba(60,30,20,.07);
-    }
+  50%{
+    opacity:.3;
+  }
 
+}
 
-    /* =====================================================
-       INFO SECTION
-    ===================================================== */
 
-    .info-section {
-      position: relative;
+/* =========================================================
+   TITLE
+========================================================= */
 
-      padding:
-        100px 20px;
+h1{
+  position:relative;
+  z-index:3;
 
-      overflow: hidden;
+  margin:
+    27px auto
+    22px;
 
-      background:
-        linear-gradient(
-          180deg,
-          #fbf7ef,
-          #eee1cd
-        );
-    }
+  font-family:var(--serif);
 
-    .info-section::before {
-      content: "";
+  font-size:
+    clamp(
+      60px,
+      8vw,
+      110px
+    );
 
-      position: absolute;
+  line-height:.8;
 
-      width: 600px;
-      height: 600px;
+  letter-spacing:-4px;
 
-      left: -300px;
-      top: 20%;
+  color:var(--green);
 
-      border-radius: 50%;
+  text-shadow:
+    0 12px 30px rgba(0,0,0,.08);
+}
 
-      border:
-        1px solid rgba(120,21,43,.09);
+h1 span{
+  color:var(--maroon);
 
-      box-shadow:
-        0 0 0 40px rgba(120,21,43,.025),
-        0 0 0 80px rgba(120,21,43,.018);
-    }
+  text-shadow:
+    0 12px 30px rgba(123,23,48,.13);
+}
 
 
-    /* =====================================================
-       SECTION TITLE
-    ===================================================== */
+/* =========================================================
+   TAGLINE
+========================================================= */
 
-    .section-heading {
-      position: relative;
+.tagline{
+  position:relative;
+  z-index:3;
 
-      z-index: 2;
+  max-width:680px;
 
-      text-align: center;
+  margin:auto;
 
-      margin-bottom: 48px;
-    }
+  color:var(--muted);
 
-    .section-heading small {
-      display: block;
+  font-size:16px;
 
-      margin-bottom: 10px;
+  line-height:1.85;
+}
 
-      color: var(--maroon);
+.tagline strong{
+  color:var(--text);
+}
 
-      font-size: 10px;
 
-      letter-spacing: 5px;
+/* =========================================================
+   BUTTONS
+========================================================= */
 
-      font-weight: 800;
-    }
+.buttons{
+  position:relative;
+  z-index:3;
 
-    .section-heading h2 {
-      font-family: var(--serif);
+  display:flex;
 
-      color: var(--green);
+  justify-content:center;
 
-      font-size:
-        clamp(
-          42px,
-          5vw,
-          62px
-        );
+  flex-wrap:wrap;
 
-      line-height: 1;
-    }
+  gap:14px;
 
-    .line {
-      width: 80px;
-      height: 2px;
+  margin-top:32px;
+}
 
-      margin:
-        18px auto
-        0;
+.btn{
+  position:relative;
 
-      background:
-        linear-gradient(
-          90deg,
-          transparent,
-          var(--maroon),
-          transparent
-        );
-    }
+  min-height:53px;
 
+  padding:
+    0 27px;
 
-    /* =====================================================
-       CARDS
-    ===================================================== */
+  display:inline-flex;
 
-    .info-grid {
-      position: relative;
+  align-items:center;
+  justify-content:center;
 
-      z-index: 2;
+  border-radius:100px;
 
-      width: 100%;
-      max-width: 1060px;
+  font-size:13px;
+  font-weight:700;
 
-      margin: auto;
+  overflow:hidden;
 
-      display: grid;
+  transition:
+    transform .3s ease,
+    box-shadow .3s ease;
+}
 
-      grid-template-columns:
-        repeat(3, 1fr);
+.btn::before{
+  content:"";
 
-      gap: 22px;
-    }
+  position:absolute;
 
-    .info-card {
-      position: relative;
+  width:0;
+  height:0;
 
-      min-height: 190px;
+  left:var(--bx,50%);
+  top:var(--by,50%);
 
-      padding:
-        30px 26px;
+  border-radius:50%;
 
-      overflow: hidden;
+  background:
+    rgba(255,255,255,.2);
 
-      border-radius: 25px;
+  transform:
+    translate(-50%,-50%);
 
-      background:
-        linear-gradient(
-          145deg,
-          rgba(255,255,255,.76),
-          rgba(255,255,255,.40)
-        );
+  transition:
+    width .6s ease,
+    height .6s ease;
+}
 
-      border:
-        1px solid rgba(255,255,255,.92);
+.btn:hover::before{
+  width:350px;
+  height:350px;
+}
 
-      box-shadow:
-        0 20px 45px rgba(74,46,22,.09),
-        inset 0 1px 0 rgba(255,255,255,.9);
+.btn span{
+  position:relative;
+  z-index:2;
+}
 
-      backdrop-filter:
-        blur(16px);
+.btn-primary{
+  color:white;
 
-      -webkit-backdrop-filter:
-        blur(16px);
+  background:
+    linear-gradient(
+      145deg,
+      #91223e,
+      #560b1d
+    );
 
-      transform-style: preserve-3d;
+  box-shadow:
+    0 17px 35px rgba(123,23,48,.27);
+}
 
-      transition:
-        box-shadow .35s ease;
-    }
+.btn-secondary{
+  color:var(--maroon);
 
-    .info-card:hover {
-      box-shadow:
-        0 35px 65px rgba(74,46,22,.17);
-    }
+  background:
+    rgba(255,255,255,.62);
 
-    .info-card::before {
-      content: "";
+  border:
+    1px solid rgba(123,23,48,.23);
 
-      position: absolute;
+  box-shadow:
+    0 12px 25px rgba(60,30,20,.07);
+}
 
-      width: 170px;
-      height: 170px;
 
-      right: -80px;
-      bottom: -90px;
+/* =========================================================
+   INFO
+========================================================= */
 
-      border-radius: 50%;
+.info{
+  position:relative;
 
-      border:
-        1px solid rgba(120,21,43,.11);
+  padding:
+    105px 20px;
 
-      box-shadow:
-        0 0 0 22px rgba(120,21,43,.025),
-        0 0 0 45px rgba(120,21,43,.018);
-    }
+  overflow:hidden;
 
-    .icon {
-      width: 54px;
-      height: 54px;
+  background:
+    linear-gradient(
+      180deg,
+      #fffaf1,
+      #eee2ce
+    );
+}
 
-      margin-bottom: 20px;
+.section-title{
+  text-align:center;
 
-      display: flex;
+  margin-bottom:50px;
+}
 
-      align-items: center;
-      justify-content: center;
+.section-title small{
+  display:block;
 
-      border-radius: 17px;
+  color:var(--maroon);
 
-      color: white;
+  font-size:10px;
 
-      font-size: 20px;
+  letter-spacing:5px;
 
-      background:
-        linear-gradient(
-          145deg,
-          #8c2039,
-          #570c1e
-        );
+  font-weight:800;
 
-      box-shadow:
-        0 14px 25px rgba(120,21,43,.23);
+  margin-bottom:10px;
+}
 
-      transform:
-        translateZ(30px);
-    }
+.section-title h2{
+  font-family:var(--serif);
 
-    .info-card h3 {
-      margin-bottom: 8px;
+  color:var(--green);
 
-      font-family: var(--serif);
+  font-size:
+    clamp(
+      45px,
+      5vw,
+      64px
+    );
 
-      font-size: 27px;
+  line-height:1;
+}
 
-      color: var(--green);
+.section-line{
+  width:85px;
+  height:2px;
 
-      transform:
-        translateZ(20px);
-    }
+  margin:
+    18px auto
+    0;
 
-    .info-card p,
-    .info-card a {
-      position: relative;
-      z-index: 2;
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      var(--maroon),
+      transparent
+    );
+}
 
-      color: var(--muted);
 
-      font-size: 13px;
+/* =========================================================
+   INFO GRID
+========================================================= */
 
-      line-height: 1.7;
+.info-grid{
+  max-width:1060px;
 
-      text-decoration: none;
+  margin:auto;
 
-      transform:
-        translateZ(15px);
-    }
+  display:grid;
 
-    .info-card a:hover {
-      color: var(--maroon);
-    }
+  grid-template-columns:
+    repeat(3,1fr);
 
+  gap:22px;
+}
 
-    /* =====================================================
-       ABOUT
-    ===================================================== */
+.card{
+  position:relative;
 
-    .about {
-      position: relative;
+  min-height:195px;
 
-      min-height: 520px;
+  padding:30px 26px;
 
-      display: flex;
+  overflow:hidden;
 
-      align-items: center;
+  border-radius:27px;
 
-      overflow: hidden;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.8),
+      rgba(255,255,255,.4)
+    );
 
-      padding:
-        100px 20px;
+  border:
+    1px solid rgba(255,255,255,.9);
 
-      color: white;
+  box-shadow:
+    0 22px 45px rgba(70,43,20,.08);
 
-      background:
-        radial-gradient(
-          circle at 80% 20%,
-          rgba(196,154,82,.17),
-          transparent 28%
-        ),
-        linear-gradient(
-          135deg,
-          #681127,
-          #3c0916
-        );
-    }
+  backdrop-filter:blur(16px);
 
-    .about-content {
-      position: relative;
+  transform-style:preserve-3d;
 
-      z-index: 4;
+  transition:
+    box-shadow .35s ease;
+}
 
-      width: 100%;
-      max-width: 1050px;
+.card:hover{
+  box-shadow:
+    0 35px 70px rgba(70,43,20,.15);
+}
 
-      margin: auto;
-    }
+.card::before{
+  content:"";
 
-    .about-label {
-      color: #d8b66f;
+  position:absolute;
 
-      font-size: 10px;
+  width:170px;
+  height:170px;
 
-      letter-spacing: 5px;
+  right:-85px;
+  bottom:-85px;
 
-      font-weight: 800;
+  border-radius:50%;
 
-      margin-bottom: 15px;
-    }
+  border:
+    1px solid rgba(123,23,48,.1);
 
-    .about h2 {
-      max-width: 700px;
+  box-shadow:
+    0 0 0 25px rgba(123,23,48,.025),
+    0 0 0 50px rgba(123,23,48,.015);
+}
 
-      margin-bottom: 28px;
+.icon{
+  width:54px;
+  height:54px;
 
-      font-family: var(--serif);
+  display:flex;
 
-      font-size:
-        clamp(
-          55px,
-          7vw,
-          90px
-        );
+  align-items:center;
+  justify-content:center;
 
-      line-height: .86;
+  margin-bottom:20px;
 
-      letter-spacing: -2px;
-    }
+  border-radius:17px;
 
-    .about p {
-      max-width: 650px;
+  color:white;
 
-      color:
-        rgba(255,255,255,.76);
+  font-size:20px;
 
-      font-size: 16px;
+  background:
+    linear-gradient(
+      145deg,
+      #8e213d,
+      #570c1d
+    );
 
-      line-height: 1.9;
-    }
+  box-shadow:
+    0 14px 25px rgba(123,23,48,.22);
 
+  transform:translateZ(30px);
+}
 
-    /* =====================================================
-       FABRIC
-    ===================================================== */
+.card h3{
+  position:relative;
 
-    .fabric {
-      position: absolute;
+  margin-bottom:8px;
 
-      width: 430px;
-      height: 210px;
+  font-family:var(--serif);
 
-      right: -60px;
-      bottom: 20px;
+  font-size:27px;
 
-      border-radius:
-        70% 20% 60% 20%;
+  color:var(--green);
 
-      background:
-        repeating-linear-gradient(
-          45deg,
-          #d8c097 0,
-          #d8c097 5px,
-          #f0dfba 6px,
-          #b59a6e 9px
-        );
+  transform:translateZ(20px);
+}
 
-      box-shadow:
-        -25px 35px 55px rgba(0,0,0,.3);
+.card p,
+.card a{
+  position:relative;
 
-      transform:
-        rotate(-8deg)
-        skewX(-8deg);
+  z-index:2;
 
-      transition:
-        transform 1s cubic-bezier(.2,.8,.2,1);
-    }
+  color:var(--muted);
 
-    .fabric::before {
-      content: "";
+  font-size:13px;
 
-      position: absolute;
+  line-height:1.7;
 
-      inset: 25px;
+  transform:translateZ(15px);
+}
 
-      border:
-        2px solid rgba(120,21,43,.42);
+.card a:hover{
+  color:var(--maroon);
+}
 
-      background:
-        repeating-linear-gradient(
-          90deg,
-          transparent 0,
-          transparent 14px,
-          rgba(120,21,43,.18) 15px,
-          transparent 18px
-        );
-    }
 
+/* =========================================================
+   ABOUT
+========================================================= */
 
-    /* =====================================================
-       FOOTER
-    ===================================================== */
+.about{
+  position:relative;
 
-    footer {
-      padding:
-        27px 20px;
+  min-height:560px;
 
-      text-align: center;
+  display:flex;
 
-      background:
-        var(--deep-green);
+  align-items:center;
 
-      color:
-        rgba(255,255,255,.58);
+  overflow:hidden;
 
-      font-size: 12px;
-    }
+  padding:
+    100px 20px;
 
-    footer strong {
-      color: white;
-    }
+  color:white;
 
+  background:
+    radial-gradient(
+      circle at 80% 20%,
+      rgba(198,160,90,.17),
+      transparent 30%
+    ),
 
-    /* =====================================================
-       MOBILE
-    ===================================================== */
+    linear-gradient(
+      135deg,
+      #681127,
+      #3b0916
+    );
+}
 
-    @media (max-width: 800px) {
+.about::before{
+  content:"";
 
-      .mouse-light,
-      .cursor-dot,
-      .cursor-ring {
-        display: none;
-      }
+  position:absolute;
 
-      .hero {
-        min-height: auto;
+  inset:0;
 
-        padding:
-          30px 14px
-          55px;
-      }
+  opacity:.08;
 
-      .hero-panel {
-        padding:
-          48px 20px
-          45px;
+  background-image:
+    linear-gradient(
+      45deg,
+      transparent 45%,
+      white 46%,
+      white 50%,
+      transparent 51%
+    );
 
-        border-radius: 28px;
-      }
+  background-size:45px 45px;
+}
 
-      .logo-box {
-        width: 150px;
-        height: 150px;
-      }
+.about-content{
+  position:relative;
 
-      .logo-shadow {
-        width: 135px;
-        height: 135px;
-      }
+  z-index:5;
 
-      .logo-ring {
-        width: 150px;
-        height: 150px;
-      }
+  max-width:1050px;
 
-      .logo {
-        width: 120px;
-        height: 120px;
+  width:100%;
 
-        left: 15px;
-        top: 15px;
-      }
+  margin:auto;
+}
 
-      h1 {
-        font-size:
-          clamp(
-            53px,
-            15vw,
-            78px
-          );
+.about-label{
+  color:#d9b86c;
 
-        letter-spacing: -3px;
-      }
+  font-size:10px;
 
-      .tagline {
-        font-size: 15px;
-      }
+  letter-spacing:5px;
 
-      .info-grid {
-        grid-template-columns: 1fr;
+  font-weight:800;
 
-        max-width: 520px;
-      }
+  margin-bottom:16px;
+}
 
-      .info-section {
-        padding:
-          75px 15px;
-      }
+.about h2{
+  max-width:700px;
 
-      .about {
-        min-height: 480px;
+  margin-bottom:28px;
 
-        padding:
-          75px 20px;
-      }
+  font-family:var(--serif);
 
-      .fabric {
-        right: -180px;
-        opacity: .3;
-      }
+  font-size:
+    clamp(
+      55px,
+      7vw,
+      92px
+    );
 
-      .leaf-1 {
-        left: -30px;
-      }
+  line-height:.85;
 
-      .leaf-2 {
-        right: -30px;
-      }
+  letter-spacing:-2px;
+}
 
-    }
+.about p{
+  max-width:650px;
 
+  color:
+    rgba(255,255,255,.76);
 
-    @media (max-width: 450px) {
+  font-size:16px;
 
-      .hero-panel {
-        padding:
-          40px 17px;
-      }
+  line-height:1.9;
+}
 
-      h1 {
-        font-size: 52px;
-      }
 
-      .buttons {
-        width: 100%;
+/* =========================================================
+   FABRIC
+========================================================= */
 
-        flex-direction: column;
+.fabric{
+  position:absolute;
 
-        max-width: 300px;
+  right:-60px;
+  bottom:25px;
 
-        margin-left: auto;
-        margin-right: auto;
-      }
+  width:470px;
+  height:230px;
 
-      .btn {
-        width: 100%;
-      }
+  border-radius:
+    70% 20% 60% 20%;
 
-      .about h2 {
-        font-size: 57px;
-      }
+  background:
+    repeating-linear-gradient(
+      45deg,
+      #d6bd8e 0,
+      #d6bd8e 5px,
+      #f2dfb8 6px,
+      #b79a6a 9px
+    );
 
-    }
+  transform:
+    rotate(-8deg)
+    skewX(-8deg);
 
+  box-shadow:
+    -30px 40px 60px rgba(0,0,0,.3);
 
-    /* =====================================================
-       REDUCED MOTION
-    ===================================================== */
+  animation:
+    fabricMove
+    7s
+    ease-in-out
+    infinite;
+}
 
-    @media (prefers-reduced-motion: reduce) {
+.fabric::before{
+  content:"";
 
-      *,
-      *::before,
-      *::after {
-        animation: none !important;
-        transition: none !important;
-      }
+  position:absolute;
 
-    }
+  inset:25px;
 
-  </style>
+  border:
+    2px solid rgba(123,23,48,.4);
+
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent 0,
+      transparent 14px,
+      rgba(123,23,48,.18) 15px,
+      transparent 18px
+    );
+}
+
+@keyframes fabricMove{
+
+  0%,100%{
+    transform:
+      rotate(-8deg)
+      skewX(-8deg)
+      translateY(0);
+  }
+
+  50%{
+    transform:
+      rotate(-5deg)
+      skewX(-8deg)
+      translateY(-14px);
+  }
+
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer{
+  padding:28px 20px;
+
+  text-align:center;
+
+  background:var(--green-dark);
+
+  color:
+    rgba(255,255,255,.58);
+
+  font-size:12px;
+}
+
+footer strong{
+  color:white;
+}
+
+
+/* =========================================================
+   SCROLL REVEAL
+========================================================= */
+
+.reveal{
+  opacity:0;
+
+  transform:
+    translateY(50px);
+
+  transition:
+    opacity .9s ease,
+    transform .9s cubic-bezier(.2,.8,.2,1);
+}
+
+.reveal.visible{
+  opacity:1;
+
+  transform:
+    translateY(0);
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:800px){
+
+  .mouse-light,
+  .cursor-dot,
+  .cursor-ring{
+    display:none;
+  }
+
+  .hero{
+    min-height:auto;
+
+    padding:
+      30px 14px
+      55px;
+  }
+
+  .hero-card{
+    padding:
+      48px 20px
+      45px;
+
+    border-radius:28px;
+  }
+
+  .logo-wrap{
+    width:150px;
+    height:150px;
+  }
+
+  .logo-back{
+    width:135px;
+    height:135px;
+  }
+
+  .logo-ring{
+    width:150px;
+    height:150px;
+  }
+
+  .logo{
+    width:120px;
+    height:120px;
+
+    left:15px;
+    top:15px;
+  }
+
+  h1{
+    font-size:
+      clamp(
+        53px,
+        15vw,
+        78px
+      );
+
+    letter-spacing:-3px;
+  }
+
+  .tagline{
+    font-size:15px;
+  }
+
+  .info{
+    padding:
+      75px 15px;
+  }
+
+  .info-grid{
+    grid-template-columns:1fr;
+
+    max-width:520px;
+  }
+
+  .about{
+    min-height:500px;
+
+    padding:
+      75px 20px;
+  }
+
+  .fabric{
+    right:-200px;
+
+    opacity:.3;
+  }
+
+  .leaf-1{
+    left:-35px;
+  }
+
+  .leaf-2{
+    right:-35px;
+  }
+
+}
+
+@media(max-width:450px){
+
+  .hero-card{
+    padding:
+      40px 17px;
+  }
+
+  h1{
+    font-size:52px;
+  }
+
+  .buttons{
+    width:100%;
+
+    flex-direction:column;
+
+    max-width:300px;
+
+    margin:
+      30px auto
+      0;
+  }
+
+  .btn{
+    width:100%;
+  }
+
+  .about h2{
+    font-size:58px;
+  }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media(prefers-reduced-motion:reduce){
+
+  *,
+  *::before,
+  *::after{
+    animation:none!important;
+    transition:none!important;
+  }
+
+}
+
+</style>
 </head>
 
 
 <body>
 
 
-  <!-- =====================================================
-       MOUSE EFFECT
-  ===================================================== -->
+<!-- =======================================================
+     LOADER
+======================================================= -->
 
-  <div class="mouse-light"></div>
-  <div class="cursor-dot"></div>
-  <div class="cursor-ring"></div>
+<div class="loader" id="loader">
 
+  <div class="loader-inner">
 
-  <!-- =====================================================
-       HERO
-  ===================================================== -->
+    <img
+      src="./image/logo.png"
+      class="loader-logo"
+      alt="Deshi Polli"
+    >
 
-  <section class="hero">
-
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
-
-    <div class="leaf leaf-1"></div>
-    <div class="leaf leaf-2"></div>
-
-
-    <!-- Floating particles -->
-
-    <div class="particles">
-
-      <span
-        class="particle"
-        style="
-          left:12%;
-          top:22%;
-          --duration:4s;
-          --move-x:25px;
-          --move-y:-30px;
-        "
-      ></span>
-
-      <span
-        class="particle"
-        style="
-          left:22%;
-          top:72%;
-          --duration:5s;
-          --move-x:-20px;
-          --move-y:-35px;
-        "
-      ></span>
-
-      <span
-        class="particle"
-        style="
-          left:78%;
-          top:25%;
-          --duration:4.5s;
-          --move-x:20px;
-          --move-y:30px;
-        "
-      ></span>
-
-      <span
-        class="particle"
-        style="
-          left:87%;
-          top:65%;
-          --duration:6s;
-          --move-x:-25px;
-          --move-y:-20px;
-        "
-      ></span>
-
-      <span
-        class="particle"
-        style="
-          left:52%;
-          top:12%;
-          --duration:5.5s;
-          --move-x:15px;
-          --move-y:25px;
-        "
-      ></span>
-
-      <span
-        class="particle"
-        style="
-          left:65%;
-          top:85%;
-          --duration:4.5s;
-          --move-x:-15px;
-          --move-y:-25px;
-        "
-      ></span>
-
+    <div class="loader-line">
+      <span></span>
     </div>
 
+  </div>
 
-    <div class="container">
-
-      <div
-        class="hero-panel tilt"
-        data-tilt="8"
-      >
+</div>
 
 
-        <!-- LOGO -->
+<!-- =======================================================
+     CURSOR
+======================================================= -->
 
-        <div class="logo-box">
+<div class="cursor-dot"></div>
+<div class="cursor-ring"></div>
 
-          <div class="logo-shadow"></div>
-
-          <div class="logo-ring"></div>
-
-          <img
-            src="./image/logo.png"
-            alt="Deshi Polli Logo"
-            class="logo"
-          >
-
-        </div>
+<div class="mouse-light"></div>
 
 
-        <!-- BADGE -->
+<!-- =======================================================
+     HERO
+======================================================= -->
 
-        <div class="badge">
-
-          <span class="badge-dot"></span>
-
-          COMING SOON
-
-        </div>
+<section class="hero">
 
 
-        <!-- TITLE -->
+  <!-- decorative -->
 
-        <h1>
+  <div class="sun"></div>
 
-          Deshi Roots.<br>
+  <div class="ring ring-1"></div>
+  <div class="ring ring-2"></div>
 
-          <span>Modern Soul.</span>
-
-        </h1>
-
-
-        <!-- DESCRIPTION -->
-
-        <p class="tagline">
-
-          <strong>Deshi Polli</strong> is a brand inspired by
-          the soul of Bangladesh, celebrating our heritage,
-          craftsmanship, culture, and timeless traditions.
-
-          <br><br>
-
-          Something special is being created.
-          Stay connected and be the first to know when we launch.
-
-        </p>
+  <div class="leaf leaf-1"></div>
+  <div class="leaf leaf-2"></div>
 
 
-        <!-- BUTTONS -->
+  <!-- Fireflies -->
 
-        <div class="buttons">
+  <span
+    class="firefly"
+    style="
+      left:12%;
+      top:30%;
+      --x:35px;
+      --y:-45px;
+      --time:5s;
+    "
+  ></span>
 
-          <a
-            href="https://www.facebook.com/share/1A4dMoyazv/"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="btn btn-primary magnetic"
-          >
-            <span class="btn-text">
-              ● &nbsp; Follow us on Facebook
-            </span>
-          </a>
+  <span
+    class="firefly"
+    style="
+      left:23%;
+      top:70%;
+      --x:-30px;
+      --y:-55px;
+      --time:6s;
+    "
+  ></span>
+
+  <span
+    class="firefly"
+    style="
+      left:75%;
+      top:28%;
+      --x:40px;
+      --y:35px;
+      --time:5.5s;
+    "
+  ></span>
+
+  <span
+    class="firefly"
+    style="
+      left:88%;
+      top:62%;
+      --x:-35px;
+      --y:-30px;
+      --time:7s;
+    "
+  ></span>
+
+  <span
+    class="firefly"
+    style="
+      left:62%;
+      top:18%;
+      --x:25px;
+      --y:40px;
+      --time:4.5s;
+    "
+  ></span>
 
 
-          <a
-            href="mailto:deshipolli@gmail.com"
-            class="btn btn-secondary magnetic"
-          >
-            <span class="btn-text">
-              ✉ &nbsp; Contact Us
-            </span>
-          </a>
-
-        </div>
-
-      </div>
-
-    </div>
-
-  </section>
+  <div class="container">
 
 
+    <!-- HERO CARD -->
 
-  <!-- =====================================================
-       INFORMATION
-  ===================================================== -->
-
-  <section class="info-section">
-
-    <div class="section-heading">
-
-      <small>DESHI POLLI</small>
-
-      <h2>
-        Quick Information
-      </h2>
-
-      <div class="line"></div>
-
-    </div>
+    <div
+      class="hero-card tilt reveal"
+      data-tilt="5"
+    >
 
 
-    <div class="info-grid">
+      <!-- LOGO -->
 
+      <div class="logo-wrap">
 
-      <div
-        class="info-card tilt"
-        data-tilt="12"
-      >
+        <div class="logo-back"></div>
 
-        <div class="icon">
-          ✦
-        </div>
+        <div class="logo-ring"></div>
 
-        <h3>
-          Category
-        </h3>
-
-        <p>
-          Clothing Brand
-        </p>
+        <img
+          src="./image/logo.png"
+          alt="Deshi Polli Logo"
+          class="logo"
+        >
 
       </div>
 
 
-      <div
-        class="info-card tilt"
-        data-tilt="12"
-      >
+      <!-- BADGE -->
 
-        <div class="icon">
-          ⌖
-        </div>
+      <div class="badge">
 
-        <h3>
-          Location
-        </h3>
+        <span class="badge-dot"></span>
 
-        <p>
-          Chattogram, Bangladesh
-        </p>
+        COMING SOON
 
       </div>
 
 
-      <div
-        class="info-card tilt"
-        data-tilt="12"
-      >
+      <!-- TITLE -->
 
-        <div class="icon">
-          ◷
-        </div>
+      <h1>
 
-        <h3>
-          Availability
-        </h3>
+        Deshi Roots.<br>
 
-        <p>
-          Always Open
-        </p>
+        <span>Modern Soul.</span>
 
-      </div>
+      </h1>
 
 
-      <div
-        class="info-card tilt"
-        data-tilt="12"
-      >
+      <!-- DESCRIPTION -->
 
-        <div class="icon">
-          ☎
-        </div>
+      <p class="tagline">
 
-        <h3>
-          Phone
-        </h3>
+        <strong>Deshi Polli</strong> is a brand inspired by
+        the soul of Bangladesh, celebrating our heritage,
+        craftsmanship, culture, and timeless traditions.
 
-        <a href="tel:01726904287">
-          01726-904287
+        <br><br>
+
+        Something special is being created.
+        Stay connected and be the first to know when we launch.
+
+      </p>
+
+
+      <!-- CTA -->
+
+      <div class="buttons">
+
+        <a
+          href="https://www.facebook.com/share/1A4dMoyazv/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn btn-primary magnetic"
+        >
+          <span>
+            ● &nbsp; Follow us on Facebook
+          </span>
+        </a>
+
+        <a
+          href="mailto:deshipolli@gmail.com"
+          class="btn btn-secondary magnetic"
+        >
+          <span>
+            ✉ &nbsp; Contact Us
+          </span>
         </a>
 
       </div>
 
 
-      <div
-        class="info-card tilt"
-        data-tilt="12"
-      >
-
-        <div class="icon">
-          ✉
-        </div>
-
-        <h3>
-          Email
-        </h3>
-
-        <a href="mailto:deshipolli@gmail.com">
-          deshipolli@gmail.com
-        </a>
-
-      </div>
-
-
-      <div
-        class="info-card tilt"
-        data-tilt="12"
-      >
-
-        <div class="icon">
-          ⌂
-        </div>
-
-        <h3>
-          Address
-        </h3>
-
-        <p>
-          House No–6, Gate No–9,<br>
-          Road No–2, Lane No–5,<br>
-          K Block, Halishahar,<br>
-          Chattogram, Bangladesh
-        </p>
-
-      </div>
-
-
     </div>
 
-  </section>
+  </div>
+
+</section>
 
 
 
-  <!-- =====================================================
-       ABOUT
-  ===================================================== -->
+<!-- =======================================================
+     INFORMATION
+======================================================= -->
 
-  <section class="about">
+<section class="info">
 
-    <div class="fabric"></div>
 
-    <div class="about-content">
+  <div class="section-title reveal">
 
-      <div class="about-label">
-        DESHI POLLI
+    <small>DESHI POLLI</small>
+
+    <h2>
+      Quick Information
+    </h2>
+
+    <div class="section-line"></div>
+
+  </div>
+
+
+  <div class="info-grid">
+
+
+    <div
+      class="card tilt reveal"
+      data-tilt="10"
+    >
+
+      <div class="icon">
+        ✦
       </div>
 
-      <h2>
-        Rooted in<br>
-        Bangladesh.
-      </h2>
+      <h3>
+        Category
+      </h3>
 
       <p>
-
-        We believe our heritage is more than history.
-        It is the art, culture, craftsmanship and stories
-        that continue to shape who we are.
-
-        Deshi Polli is bringing these timeless elements
-        into a new expression.
-
+        Clothing Brand
       </p>
 
     </div>
 
-  </section>
+
+    <div
+      class="card tilt reveal"
+      data-tilt="10"
+    >
+
+      <div class="icon">
+        ⌖
+      </div>
+
+      <h3>
+        Location
+      </h3>
+
+      <p>
+        Chattogram, Bangladesh
+      </p>
+
+    </div>
+
+
+    <div
+      class="card tilt reveal"
+      data-tilt="10"
+    >
+
+      <div class="icon">
+        ◷
+      </div>
+
+      <h3>
+        Availability
+      </h3>
+
+      <p>
+        Always Open
+      </p>
+
+    </div>
+
+
+    <div
+      class="card tilt reveal"
+      data-tilt="10"
+    >
+
+      <div class="icon">
+        ☎
+      </div>
+
+      <h3>
+        Phone
+      </h3>
+
+      <a href="tel:01726904287">
+        01726-904287
+      </a>
+
+    </div>
+
+
+    <div
+      class="card tilt reveal"
+      data-tilt="10"
+    >
+
+      <div class="icon">
+        ✉
+      </div>
+
+      <h3>
+        Email
+      </h3>
+
+      <a href="mailto:deshipolli@gmail.com">
+        deshipolli@gmail.com
+      </a>
+
+    </div>
+
+
+    <div
+      class="card tilt reveal"
+      data-tilt="10"
+    >
+
+      <div class="icon">
+        ⌂
+      </div>
+
+      <h3>
+        Address
+      </h3>
+
+      <p>
+        House No–6, Gate No–9,<br>
+        Road No–2, Lane No–5,<br>
+        K Block, Halishahar,<br>
+        Chattogram, Bangladesh
+      </p>
+
+    </div>
+
+
+  </div>
+
+</section>
 
 
 
-  <!-- =====================================================
-       FOOTER
-  ===================================================== -->
+<!-- =======================================================
+     ABOUT
+======================================================= -->
 
-  <footer>
+<section class="about">
+
+  <div class="fabric"></div>
+
+
+  <div class="about-content reveal">
+
+    <div class="about-label">
+      DESHI POLLI
+    </div>
+
+    <h2>
+      Rooted in<br>
+      Bangladesh.
+    </h2>
 
     <p>
-      © 2026
-      <strong>Deshi Polli</strong>.
-      All rights reserved.
+
+      We believe our heritage is more than history.
+      It is the art, culture, craftsmanship and stories
+      that continue to shape who we are.
+
+      Deshi Polli is bringing these timeless elements
+      into a new expression.
+
     </p>
 
-  </footer>
+  </div>
 
+</section>
 
 
-  <!-- =====================================================
-       JAVASCRIPT
-  ===================================================== -->
 
-  <script>
+<!-- =======================================================
+     FOOTER
+======================================================= -->
 
-    /* =====================================================
-       MOUSE POSITION
-    ===================================================== */
+<footer>
 
-    const root = document.documentElement;
+  <p>
+    © 2026
+    <strong>Deshi Polli</strong>.
+    All rights reserved.
+  </p>
 
-    const cursorDot =
-      document.querySelector(".cursor-dot");
+</footer>
 
-    const cursorRing =
-      document.querySelector(".cursor-ring");
 
-    let mouseX = window.innerWidth / 2;
-    let mouseY = window.innerHeight / 2;
 
-    let ringX = mouseX;
-    let ringY = mouseY;
+<script>
 
+/* =========================================================
+   LOADER
+========================================================= */
 
-    document.addEventListener("mousemove", (e) => {
+window.addEventListener("load", () => {
 
-      mouseX = e.clientX;
-      mouseY = e.clientY;
+  setTimeout(() => {
 
-      root.style.setProperty(
-        "--mouse-x",
-        mouseX + "px"
-      );
+    document
+      .getElementById("loader")
+      .classList.add("hide");
 
-      root.style.setProperty(
-        "--mouse-y",
-        mouseY + "px"
-      );
+  }, 800);
 
-      cursorDot.style.left =
-        mouseX + "px";
+});
 
-      cursorDot.style.top =
-        mouseY + "px";
 
-    });
+/* =========================================================
+   MOUSE
+========================================================= */
 
+const root =
+  document.documentElement;
 
-    /* Smooth cursor */
+const dot =
+  document.querySelector(".cursor-dot");
 
-    function animateCursor() {
+const ring =
+  document.querySelector(".cursor-ring");
 
-      ringX +=
-        (mouseX - ringX) * 0.12;
+let mouseX =
+  window.innerWidth / 2;
 
-      ringY +=
-        (mouseY - ringY) * 0.12;
+let mouseY =
+  window.innerHeight / 2;
 
-      cursorRing.style.left =
-        ringX + "px";
+let ringX = mouseX;
+let ringY = mouseY;
 
-      cursorRing.style.top =
-        ringY + "px";
 
-      requestAnimationFrame(
-        animateCursor
-      );
+document.addEventListener(
+  "mousemove",
+  e => {
 
-    }
+    mouseX = e.clientX;
+    mouseY = e.clientY;
 
-    animateCursor();
+    root.style.setProperty(
+      "--mx",
+      mouseX + "px"
+    );
 
+    root.style.setProperty(
+      "--my",
+      mouseY + "px"
+    );
 
-    /* =====================================================
-       CURSOR HOVER
-    ===================================================== */
+    dot.style.left =
+      mouseX + "px";
 
-    const hoverElements =
-      document.querySelectorAll(
-        "a, button, .info-card, .badge"
-      );
+    dot.style.top =
+      mouseY + "px";
 
-    hoverElements.forEach((element) => {
+  }
+);
 
-      element.addEventListener(
-        "mouseenter",
-        () => {
-          document.body.classList.add(
-            "cursor-hover"
-          );
-        }
-      );
 
-      element.addEventListener(
-        "mouseleave",
-        () => {
-          document.body.classList.remove(
-            "cursor-hover"
-          );
-        }
-      );
+/* smooth cursor ring */
 
-    });
+function cursorAnimation(){
 
+  ringX +=
+    (mouseX - ringX) * .13;
 
-    /* =====================================================
-       3D TILT
-    ===================================================== */
+  ringY +=
+    (mouseY - ringY) * .13;
 
-    const tiltElements =
-      document.querySelectorAll(".tilt");
+  ring.style.left =
+    ringX + "px";
 
-    tiltElements.forEach((element) => {
+  ring.style.top =
+    ringY + "px";
 
-      element.addEventListener(
-        "mousemove",
-        (e) => {
+  requestAnimationFrame(
+    cursorAnimation
+  );
 
-          if (window.innerWidth <= 800)
-            return;
+}
 
-          const rect =
-            element.getBoundingClientRect();
+cursorAnimation();
 
-          const x =
-            e.clientX - rect.left;
 
-          const y =
-            e.clientY - rect.top;
+/* =========================================================
+   CURSOR INTERACTION
+========================================================= */
 
-          const centerX =
-            rect.width / 2;
+document
+  .querySelectorAll(
+    "a, .card, .badge"
+  )
+  .forEach(el => {
 
-          const centerY =
-            rect.height / 2;
+    el.addEventListener(
+      "mouseenter",
+      () => {
+        document.body.classList.add(
+          "cursor-active"
+        );
+      }
+    );
 
-          const rotateY =
-            ((x - centerX) / centerX)
-            * Number(
-              element.dataset.tilt || 10
-            );
+    el.addEventListener(
+      "mouseleave",
+      () => {
+        document.body.classList.remove(
+          "cursor-active"
+        );
+      }
+    );
 
-          const rotateX =
-            ((centerY - y) / centerY)
-            * Number(
-              element.dataset.tilt || 10
-            );
+  });
 
-          element.style.transform =
-            `perspective(1000px)
-             rotateX(${rotateX}deg)
-             rotateY(${rotateY}deg)
-             translateY(-5px)`;
 
-        }
-      );
+/* =========================================================
+   3D TILT
+========================================================= */
 
+document
+  .querySelectorAll(".tilt")
+  .forEach(el => {
 
-      element.addEventListener(
-        "mouseleave",
-        () => {
-
-          element.style.transform =
-            "";
-
-        }
-      );
-
-    });
-
-
-    /* =====================================================
-       MAGNETIC BUTTONS
-    ===================================================== */
-
-    const magneticButtons =
-      document.querySelectorAll(".magnetic");
-
-    magneticButtons.forEach((button) => {
-
-      button.addEventListener(
-        "mousemove",
-        (e) => {
-
-          if (window.innerWidth <= 800)
-            return;
-
-          const rect =
-            button.getBoundingClientRect();
-
-          const x =
-            e.clientX - rect.left;
-
-          const y =
-            e.clientY - rect.top;
-
-          const moveX =
-            (x - rect.width / 2) * .12;
-
-          const moveY =
-            (y - rect.height / 2) * .12;
-
-          button.style.transform =
-            `translate(${moveX}px, ${moveY}px)
-             scale(1.03)`;
-
-          button.style.setProperty(
-            "--btn-x",
-            x + "px"
-          );
-
-          button.style.setProperty(
-            "--btn-y",
-            y + "px"
-          );
-
-        }
-      );
-
-
-      button.addEventListener(
-        "mouseleave",
-        () => {
-
-          button.style.transform =
-            "";
-
-        }
-      );
-
-    });
-
-
-    /* =====================================================
-       PARALLAX BACKGROUND
-    ===================================================== */
-
-    const orbOne =
-      document.querySelector(".orb-1");
-
-    const orbTwo =
-      document.querySelector(".orb-2");
-
-    const leafOne =
-      document.querySelector(".leaf-1");
-
-    const leafTwo =
-      document.querySelector(".leaf-2");
-
-    const fabric =
-      document.querySelector(".fabric");
-
-
-    document.addEventListener(
+    el.addEventListener(
       "mousemove",
-      (e) => {
+      e => {
 
-        if (window.innerWidth <= 800)
-          return;
+        if(
+          window.innerWidth <= 800
+        ) return;
+
+        const rect =
+          el.getBoundingClientRect();
 
         const x =
-          (e.clientX / window.innerWidth - .5);
+          e.clientX - rect.left;
 
         const y =
-          (e.clientY / window.innerHeight - .5);
+          e.clientY - rect.top;
 
+        const centerX =
+          rect.width / 2;
 
-        orbOne.style.transform =
-          `translate(
-            ${x * -30}px,
-            ${y * -30}px
-          )`;
+        const centerY =
+          rect.height / 2;
 
+        const strength =
+          Number(
+            el.dataset.tilt || 10
+          );
 
-        orbTwo.style.transform =
-          `translate(
-            ${x * 25}px,
-            ${y * 25}px
-          )`;
+        const rotateY =
+          ((x - centerX) /
+            centerX) * strength;
 
+        const rotateX =
+          ((centerY - y) /
+            centerY) * strength;
 
-        leafOne.style.transform =
-          `translate(
-            ${x * 35}px,
-            ${y * 25}px
-          )
-          rotate(-35deg)`;
-
-
-        leafTwo.style.transform =
-          `translate(
-            ${x * -30}px,
-            ${y * -25}px
-          )
-          rotate(140deg)`;
-
-
-        fabric.style.transform =
-          `translate(
-            ${x * -25}px,
-            ${y * -15}px
-          )
-          rotate(-8deg)
-          skewX(-8deg)`;
+        el.style.transform =
+          `
+          perspective(1100px)
+          rotateX(${rotateX}deg)
+          rotateY(${rotateY}deg)
+          translateY(-6px)
+          `;
 
       }
     );
 
 
-    /* =====================================================
-       SMOOTH SCROLL
-    ===================================================== */
+    el.addEventListener(
+      "mouseleave",
+      () => {
 
-    document.querySelectorAll(
-      'a[href^="#"]'
-    ).forEach((link) => {
+        el.style.transform = "";
 
-      link.addEventListener(
-        "click",
-        (e) => {
+      }
+    );
 
-          const target =
-            document.querySelector(
-              link.getAttribute("href")
-            );
+  });
 
-          if (target) {
 
-            e.preventDefault();
+/* =========================================================
+   MAGNETIC BUTTON
+========================================================= */
 
-            target.scrollIntoView({
-              behavior: "smooth"
-            });
+document
+  .querySelectorAll(".magnetic")
+  .forEach(button => {
 
-          }
+    button.addEventListener(
+      "mousemove",
+      e => {
+
+        if(
+          window.innerWidth <= 800
+        ) return;
+
+        const rect =
+          button.getBoundingClientRect();
+
+        const x =
+          e.clientX - rect.left;
+
+        const y =
+          e.clientY - rect.top;
+
+        const moveX =
+          (x - rect.width / 2) * .13;
+
+        const moveY =
+          (y - rect.height / 2) * .13;
+
+        button.style.transform =
+          `
+          translate(
+            ${moveX}px,
+            ${moveY}px
+          )
+          scale(1.04)
+          `;
+
+        button.style.setProperty(
+          "--bx",
+          x + "px"
+        );
+
+        button.style.setProperty(
+          "--by",
+          y + "px"
+        );
+
+      }
+    );
+
+
+    button.addEventListener(
+      "mouseleave",
+      () => {
+
+        button.style.transform = "";
+
+      }
+    );
+
+  });
+
+
+/* =========================================================
+   SCROLL REVEAL
+========================================================= */
+
+const observer =
+  new IntersectionObserver(
+    entries => {
+
+      entries.forEach(entry => {
+
+        if(
+          entry.isIntersecting
+        ){
+
+          entry.target
+            .classList
+            .add("visible");
+
+          observer.unobserve(
+            entry.target
+          );
 
         }
-      );
 
-    });
+      });
 
-  </script>
+    },
+    {
+      threshold:.12
+    }
+  );
+
+
+document
+  .querySelectorAll(".reveal")
+  .forEach(el => {
+
+    observer.observe(el);
+
+  });
+
+
+/* =========================================================
+   PARALLAX
+========================================================= */
+
+const heroCard =
+  document.querySelector(
+    ".hero-card"
+  );
+
+const sun =
+  document.querySelector(".sun");
+
+const leaf1 =
+  document.querySelector(".leaf-1");
+
+const leaf2 =
+  document.querySelector(".leaf-2");
+
+const fabric =
+  document.querySelector(".fabric");
+
+
+document.addEventListener(
+  "mousemove",
+  e => {
+
+    if(
+      window.innerWidth <= 800
+    ) return;
+
+    const x =
+      (e.clientX /
+        window.innerWidth - .5);
+
+    const y =
+      (e.clientY /
+        window.innerHeight - .5);
+
+
+    /* Hero */
+
+    heroCard.style.transform =
+      `
+      perspective(1400px)
+      rotateX(${y * -3}deg)
+      rotateY(${x * 4}deg)
+      translateZ(0)
+      `;
+
+
+    /* Sun */
+
+    sun.style.transform =
+      `
+      translate(
+        ${x * -25}px,
+        ${y * -20}px
+      )
+      scale(1.05)
+      `;
+
+
+    /* Leaves */
+
+    leaf1.style.marginLeft =
+      `${x * 25}px`;
+
+    leaf1.style.marginTop =
+      `${y * 20}px`;
+
+    leaf2.style.marginRight =
+      `${x * 25}px`;
+
+    leaf2.style.marginBottom =
+      `${y * 20}px`;
+
+
+    /* Fabric */
+
+    fabric.style.marginRight =
+      `${x * 30}px`;
+
+    fabric.style.marginBottom =
+      `${y * 20}px`;
+
+  }
+);
+
+
+/* =========================================================
+   BUTTON RIPPLE
+========================================================= */
+
+document
+  .querySelectorAll(".btn")
+  .forEach(btn => {
+
+    btn.addEventListener(
+      "click",
+      function(e){
+
+        const ripple =
+          document.createElement(
+            "span"
+          );
+
+        ripple.style.position =
+          "absolute";
+
+        ripple.style.width =
+          "10px";
+
+        ripple.style.height =
+          "10px";
+
+        ripple.style.borderRadius =
+          "50%";
+
+        ripple.style.background =
+          "rgba(255,255,255,.3)";
+
+        ripple.style.left =
+          e.offsetX + "px";
+
+        ripple.style.top =
+          e.offsetY + "px";
+
+        ripple.style.transform =
+          "translate(-50%,-50%)";
+
+        ripple.style.pointerEvents =
+          "none";
+
+        ripple.style.animation =
+          "ripple .7s ease-out";
+
+        btn.appendChild(ripple);
+
+        setTimeout(
+          () => ripple.remove(),
+          700
+        );
+
+      }
+    );
+
+  });
+
+
+/* Ripple animation */
+
+const rippleStyle =
+  document.createElement("style");
+
+rippleStyle.innerHTML = `
+@keyframes ripple{
+  from{
+    width:10px;
+    height:10px;
+    opacity:1;
+  }
+  to{
+    width:500px;
+    height:500px;
+    opacity:0;
+  }
+}
+`;
+
+document.head.appendChild(
+  rippleStyle
+);
+
+</script>
 
 </body>
 </html>
