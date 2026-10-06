@@ -293,6 +293,39 @@ nav.solid .lg{height:46px}.ll{height:110px;animation:fl 1.6s ease-in-out infinit
 @media(max-width:560px){.grid,.vgrid{grid-template-columns:1fr}.pill{display:none}.menu{display:block}.nf{flex-direction:column}.count div{min-width:0;flex:1;padding:10px 6px}.stack{opacity:.35}section.s{padding:52px 5vw}.head{margin-bottom:28px}}
 @media(max-width:560px){.hero{min-height:100svh;padding:112px 7vw 78px;align-items:center}.hero::before{inset:10px;border-radius:18px}.hero-c{width:100%;max-width:none;margin:0;text-align:center}.badge{padding:8px 14px;font-size:10px;letter-spacing:2px}.ribbon{display:block;margin:12px 0 0;font-size:10px;letter-spacing:2px}h1{font-size:44px;line-height:1.02;margin:18px 0 14px;letter-spacing:0}.tag{max-width:34ch;margin:0 auto;font-size:15px;line-height:1.65}.cta{justify-content:center;gap:10px;margin-top:22px}.btn{padding:14px 18px;font-size:13px}.count{max-width:360px;margin:24px auto 0;gap:7px}.count div{padding:9px 5px;border-radius:10px;min-width:0}.count b{font-size:22px}.count span{font-size:9px;letter-spacing:1px}.cloth{top:15%;width:75vw;height:50vh;opacity:.18}.lantern{top:16%;right:7vw;transform:scale(.62);transform-origin:top right;opacity:.6}.bird{display:none}.scroll{bottom:16px}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+/* Responsive safeguards for narrow phones and intermediate widths */
+@media(max-width:760px){
+  .head h2{font-size:clamp(28px,7vw,36px);line-height:1.15}
+  .about{min-height:0;padding-top:76px;padding-bottom:76px}
+  .about h2{font-size:clamp(36px,10vw,56px)}
+  .about p{font-size:16px}
+  .notify{padding:44px 24px;border-radius:28px}
+}
+@media(max-width:560px){
+  .hero{padding-right:6vw;padding-left:6vw}
+  h1{font-size:clamp(34px,10vw,44px)}
+  .about h2{font-size:clamp(34px,11vw,50px)}
+  .notify{padding:38px 18px;border-radius:24px}
+  .ctxt{padding:26px 18px}
+  .ctxt small{letter-spacing:3px}
+  .ctxt .fact{padding:12px 14px}
+  .count{width:100%}
+}
+@media(max-width:380px){
+  nav{padding-right:4vw;padding-left:4vw}
+  .lg{height:50px}
+  nav.solid .lg{height:42px}
+  .badge{letter-spacing:1.5px}
+  .cta{flex-direction:column;align-items:stretch}
+  .btn{width:100%;text-align:center}
+  .count{gap:5px}
+  .count span{font-size:8px;letter-spacing:.5px}
+  .ctabs{gap:8px}
+  .ctabs button{padding:10px 14px;font-size:13px}
+}
+.grid,.vgrid,.cgrid,.cpanel,.card,.v,.pr,.ctxt,.about-in,.notify{min-width:0}
+.card a,footer p,.faq-list summary,.faq-list details p,.pi p,.ctxt p,.ctxt .fact{overflow-wrap:anywhere}
+img,svg{max-width:100%}
 </style>
 </head>
 <body>
